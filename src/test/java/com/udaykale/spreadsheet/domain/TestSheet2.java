@@ -1,9 +1,9 @@
-package spreadsheet.domain;
+package com.udaykale.spreadsheet.domain;
 
-import com.sun.org.apache.xpath.internal.operations.String;
-import com.udaykale.spreadsheet.annotation.Ignore;
 import com.udaykale.spreadsheet.annotation.Row;
 import com.udaykale.spreadsheet.annotation.Rows;
+
+import java.util.List;
 
 /**
  * @author uday
@@ -11,14 +11,12 @@ import com.udaykale.spreadsheet.annotation.Rows;
 public class TestSheet2 {
 
     @Rows
-    private TestRows1 testRows1;
+    private List<TestRows1> testRows1;
 
     @Row
-    private TestRow1 testRow1;
+    private SchoolStudentInfoSheetHeader schoolStudentInfoSheetHeader;
 
-    @Ignore
     private String name;
 
-    @Ignore
     private Integer rowCount;
 }

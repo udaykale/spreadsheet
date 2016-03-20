@@ -1,4 +1,4 @@
-package com.udaykale.spreadsheet.annotation;
+package com.udaykale.spreadsheet.custom;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,8 +8,7 @@ import java.lang.annotation.Target;
 /**
  * @author uday
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface Ignore {
-
+@Retention(RetentionPolicy.SOURCE)
+@Target({ElementType.METHOD, ElementType.TYPE})
+public @interface TODO {
 }

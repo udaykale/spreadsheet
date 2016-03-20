@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 public @interface Row {
 
-    int start() default 0;
+    int position() default 0;
 }
