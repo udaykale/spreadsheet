@@ -55,12 +55,14 @@ public class RowParser<T> {
             if (String.class == type) {
                 cell.setCellType(Cell.CELL_TYPE_STRING);
                 field.set(instance, cell.getStringCellValue());
-            } else if (Double.class == type || Integer.class == type) {
+            } else if (Double.class == type) {
                 cell.setCellType(Cell.CELL_TYPE_NUMERIC);
                 field.setDouble(instance, cell.getNumericCellValue());
+            } else if (Integer.class == type) {
+                cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+                field.set(instance, (int) cell.getNumericCellValue());
             } else if (Date.class == type) {
-                cell.setCellType(Cell.CELL_TYPE_STRING);
-                field.set(instance, cell.getStringCellValue());
+                field.set(instance, cell.getDateCellValue());
             } else if (Boolean.class == type) {
                 cell.setCellType(Cell.CELL_TYPE_BOOLEAN);
                 field.set(instance, cell.getBooleanCellValue());
@@ -92,7 +94,9 @@ public class RowParser<T> {
             }
             Class<?> type = field.getType();
             com.udaykale.spreadsheet.annotation.Cell cell = field.getAnnotation(com.udaykale.spreadsheet.annotation.Cell.class);
-            if (cell.deserializer() == CellDeserializer.class || Integer.class == type || String.class == type || Double.class == type || Boolean.class == type || Date.class == type) {
+            if (cell.deserializer() != CellDeserializer.None.class ||
+                    Integer.class == type || String.class == type || Double.class == type ||
+                    Boolean.class == type || Date.class == type) {
                 fieldMap.put(cell.position() - 1, field);
             } else {
                 // Exception

@@ -1,4 +1,4 @@
-package com.udaykale.spreadsheet.domain;
+package com.udaykale.spreadsheet.domain.rows;
 
 import com.udaykale.spreadsheet.annotation.Cell;
 
