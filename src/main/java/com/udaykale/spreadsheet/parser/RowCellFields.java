@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 /**
  * @author uday
  */
-public class RowCellFields {
+class RowCellFields {
 
     private Field field;
     private CellDeserializer<?> cellDeserializer;
@@ -17,19 +17,19 @@ public class RowCellFields {
         this.cellDeserializer = cellDeserializer;
     }
 
-    public Field getField() {
+    Field getField() {
         return field;
     }
 
-    public void setField(Field field) {
+    void setField(Field field) {
         this.field = field;
     }
 
-    public CellDeserializer<?> getCellDeserializer() {
+    CellDeserializer<?> getCellDeserializer() {
         return cellDeserializer;
     }
 
-    public void setCellDeserializer(CellDeserializer<?> cellDeserializer) {
+    void setCellDeserializer(CellDeserializer<?> cellDeserializer) {
         this.cellDeserializer = cellDeserializer;
     }
 }
