@@ -1,11 +1,12 @@
 package com.udaykale.spreadsheet.parser;
 
+import com.udaykale.spreadsheet.parser.cell.CellParseTestSuite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        CellParserTest.class,
+        CellParseTestSuite.class,
         RowParserTest.class,
         SheetParserTest.class
 })

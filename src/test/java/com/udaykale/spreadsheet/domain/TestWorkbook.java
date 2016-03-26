@@ -10,9 +10,6 @@ import com.udaykale.spreadsheet.domain.sheets.StudentInformationSheet;
 @Workbook
 public class TestWorkbook {
 
-    @Sheet(name = "sad")
-    private TestSheet1 testSheet1;
-
     @Sheet(name = "das")
     private StudentInformationSheet testSheet2;
 

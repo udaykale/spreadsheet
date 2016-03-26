@@ -1,5 +1,6 @@
 package com.udaykale.spreadsheet.parser;
 
+import com.udaykale.spreadsheet.extension.CellDeserializerException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
@@ -12,7 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 public class WorkbookParser<T> {
 
     public T parse(Workbook workbook, Class<T> tClass)
-            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, SpreadsheetParserException {
+            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, CellParserException, CellDeserializerException {
 
         if (!tClass.isAnnotationPresent(com.udaykale.spreadsheet.annotation.Workbook.class)) {
             // Exception

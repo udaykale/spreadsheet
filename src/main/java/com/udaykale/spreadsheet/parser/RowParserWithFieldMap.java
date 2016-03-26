@@ -1,6 +1,7 @@
 package com.udaykale.spreadsheet.parser;
 
 import com.udaykale.spreadsheet.extension.CellDeserializer;
+import com.udaykale.spreadsheet.extension.CellDeserializerException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -42,7 +43,7 @@ class RowParserWithFieldMap<T> {
     }
 
     T parse(Row row, Class<T> tClass, Map<Integer, RowCellFields> fieldMap)
-            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, SpreadsheetParserException {
+            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, CellParserException, CellDeserializerException {
 
         if (row == null) {
             // Exception

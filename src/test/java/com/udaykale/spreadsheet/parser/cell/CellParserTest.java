@@ -1,7 +1,9 @@
-package com.udaykale.spreadsheet.parser;
+package com.udaykale.spreadsheet.parser.cell;
 
 import com.udaykale.spreadsheet.custom.NegativeTest;
 import com.udaykale.spreadsheet.custom.PositiveTest;
+import com.udaykale.spreadsheet.parser.CellParser;
+import com.udaykale.spreadsheet.parser.CellParserException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -27,9 +29,9 @@ public class CellParserTest {
     @Test
     @PositiveTest
     public void parseCorrectString()
-            throws IOException, InvalidFormatException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, SpreadsheetParserException {
+            throws IOException, InvalidFormatException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, CellParserException {
 
-        String testRegNumberString = "Registration#";
+        String expected = "Registration#";
         ClassLoader classLoader = getClass().getClassLoader();
         String filePath = classLoader.getResource("School_Student_Information.xlsx").getPath();
         Workbook workbook = new XSSFWorkbook(filePath);
@@ -37,17 +39,17 @@ public class CellParserTest {
         Row row = sheet.getRow(0);
         Cell cell = row.getCell(0);
         CellParser<String> cellParser = new CellParser<>();
-        String regNumberString = cellParser.parse(cell, String.class);
+        String actual = cellParser.parse(cell, String.class);
         workbook.close();
-        Assert.assertTrue(testRegNumberString.equals(regNumberString));
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
     @PositiveTest
     public void parseCorrectInteger()
-            throws IOException, InvalidFormatException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, SpreadsheetParserException {
+            throws IOException, InvalidFormatException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, CellParserException {
 
-        Integer testRegNumber = 1;
+        Integer expected = 1;
         ClassLoader classLoader = getClass().getClassLoader();
         String filePath = classLoader.getResource("School_Student_Information.xlsx").getPath();
         Workbook workbook = new XSSFWorkbook(filePath);
@@ -55,18 +57,18 @@ public class CellParserTest {
         Row row = sheet.getRow(1);
         Cell cell = row.getCell(0);
         CellParser<Integer> cellParser = new CellParser<>();
-        Integer regNumber = cellParser.parse(cell, Integer.class);
+        Integer actual = cellParser.parse(cell, Integer.class);
         workbook.close();
-        Assert.assertTrue(testRegNumber.equals(regNumber));
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
     @PositiveTest
     public void parseCorrectDate()
-            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, ParseException, SpreadsheetParserException {
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, ParseException, CellParserException {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
-        Date testDate = formatter.parse("10/10/05");
+        Date expected = formatter.parse("10/10/05");
         ClassLoader classLoader = getClass().getClassLoader();
         String filePath = classLoader.getResource("School_Student_Information.xlsx").getPath();
         Workbook workbook = new XSSFWorkbook(filePath);
@@ -74,17 +76,17 @@ public class CellParserTest {
         Row row = sheet.getRow(1);
         Cell cell = row.getCell(10);
         CellParser<Date> cellParser = new CellParser<>();
-        Date date = cellParser.parse(cell, Date.class);
+        Date actual = cellParser.parse(cell, Date.class);
         workbook.close();
-        Assert.assertTrue(testDate.equals(date));
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
     @PositiveTest
     public void parseCorrectBoolean()
-            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, ParseException, SpreadsheetParserException {
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, ParseException, CellParserException {
 
-        Boolean testIsActive = Boolean.TRUE;
+        Boolean expected = Boolean.TRUE;
         ClassLoader classLoader = getClass().getClassLoader();
         String filePath = classLoader.getResource("School_Student_Information.xlsx").getPath();
         Workbook workbook = new XSSFWorkbook(filePath);
@@ -92,17 +94,17 @@ public class CellParserTest {
         Row row = sheet.getRow(1);
         Cell cell = row.getCell(13);
         CellParser<Boolean> cellParser = new CellParser<>();
-        Boolean isActive = cellParser.parse(cell, Boolean.class);
+        Boolean actual = cellParser.parse(cell, Boolean.class);
         workbook.close();
-        Assert.assertTrue(testIsActive.equals(isActive));
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
     @PositiveTest
     public void parseCorrectDouble()
-            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, ParseException, SpreadsheetParserException {
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, ParseException, CellParserException {
 
-        Double testValue = 23.41;
+        Double expected = 23.41;
         ClassLoader classLoader = getClass().getClassLoader();
         String filePath = classLoader.getResource("School_Student_Information.xlsx").getPath();
         Workbook workbook = new XSSFWorkbook(filePath);
@@ -110,9 +112,9 @@ public class CellParserTest {
         Row row = sheet.getRow(1);
         Cell cell = row.getCell(14);
         CellParser<Double> cellParser = new CellParser<>();
-        Double actualValue = cellParser.parse(cell, Double.class);
+        Double actual = cellParser.parse(cell, Double.class);
         workbook.close();
-        Assert.assertTrue(testValue.equals(actualValue));
+        Assert.assertEquals(expected, actual);
     }
 
     @Rule
@@ -121,9 +123,9 @@ public class CellParserTest {
     @Test
     @NegativeTest
     public void nullCell()
-            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, ParseException, SpreadsheetParserException {
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, ParseException, CellParserException {
 
-        expectedException.expect(SpreadsheetParserException.class);
+        expectedException.expect(CellParserException.class);
         expectedException.expectMessage("Cell cannot be null");
         CellParser<Double> cellParser = new CellParser<>();
         cellParser.parse(null, Double.class);
@@ -132,9 +134,9 @@ public class CellParserTest {
     @Test
     @NegativeTest
     public void nullType()
-            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, ParseException, SpreadsheetParserException {
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, ParseException, CellParserException {
 
-        expectedException.expect(SpreadsheetParserException.class);
+        expectedException.expect(CellParserException.class);
         expectedException.expectMessage("Type cannot be null");
         ClassLoader classLoader = getClass().getClassLoader();
         String filePath = classLoader.getResource("School_Student_Information.xlsx").getPath();
@@ -150,9 +152,9 @@ public class CellParserTest {
     @Test
     @NegativeTest
     public void invalidType()
-            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, ParseException, SpreadsheetParserException {
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, ParseException, CellParserException {
 
-        expectedException.expect(SpreadsheetParserException.class);
+        expectedException.expect(CellParserException.class);
         expectedException.expectMessage("Unable to parse the type 'class java.lang.Exception'");
         ClassLoader classLoader = getClass().getClassLoader();
         String filePath = classLoader.getResource("School_Student_Information.xlsx").getPath();

@@ -1,5 +1,6 @@
 package com.udaykale.spreadsheet.parser;
 
+import com.udaykale.spreadsheet.extension.CellDeserializerException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
@@ -16,7 +17,7 @@ import java.util.Map;
 public class SheetParser<T> {
 
     protected T parse(Sheet sheet, Class<T> tClass)
-            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, SpreadsheetParserException {
+            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, CellParserException, CellDeserializerException {
 
         if (sheet == null) {
             // Exception
