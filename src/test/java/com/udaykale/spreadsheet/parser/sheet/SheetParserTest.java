@@ -1,11 +1,11 @@
-package com.udaykale.spreadsheet.parser;
+package com.udaykale.spreadsheet.parser.sheet;
 
 import org.junit.Test;
 
 /**
  * @author uday
  */
-public class RowParserTest {
+public class SheetParserTest {
 
     @Test
     public void spreadsheetParserTest() {

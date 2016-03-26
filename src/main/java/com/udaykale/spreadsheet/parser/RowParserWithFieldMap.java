@@ -16,11 +16,16 @@ import java.util.Map;
  */
 class RowParserWithFieldMap<T> {
 
-    Map<Integer, RowCellFields> cellPositionAndTypeMap(Class<T> vClazz)
+    Map<RowCellFields, Integer> cellPositionAndTypeMap(Class<T> tClass)
             throws IllegalAccessException, InstantiationException {
 
-        Map<Integer, RowCellFields> fieldMap = new HashMap<>();
-        Field[] fields = vClazz.getDeclaredFields();
+
+        if (null == tClass) {
+            // Exception
+        }
+
+        Map<RowCellFields, Integer> fieldMap = new HashMap<>();
+        Field[] fields = tClass.getDeclaredFields();
 
         // Find fields eligible to be parsed as cells and their cell position
         for (Field field : fields) {
@@ -30,11 +35,11 @@ class RowParserWithFieldMap<T> {
             }
             Class<?> type = field.getType();
             com.udaykale.spreadsheet.annotation.Cell cell = field.getAnnotation(com.udaykale.spreadsheet.annotation.Cell.class);
-            if (Integer.class == type || String.class == type || Double.class == type ||
+            if (cell.deserializer() != CellDeserializer.None.class) {
+                fieldMap.put(new RowCellFields(field, cell.deserializer().newInstance()), cell.position() - 1);
+            } else if (Integer.class == type || String.class == type || Double.class == type ||
                     Boolean.class == type || Date.class == type) {
-                fieldMap.put(cell.position() - 1, new RowCellFields(field, null));
-            } else if (cell.deserializer() != CellDeserializer.None.class) {
-                fieldMap.put(cell.position() - 1, new RowCellFields(field, cell.deserializer().newInstance()));
+                fieldMap.put(new RowCellFields(field, null), cell.position() - 1);
             } else {
                 // Exception
             }
@@ -42,19 +47,27 @@ class RowParserWithFieldMap<T> {
         return fieldMap;
     }
 
-    T parse(Row row, Class<T> tClass, Map<Integer, RowCellFields> fieldMap)
+    T parse(Row row, Class<T> tClass, Map<RowCellFields, Integer> fieldMap)
             throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, CellParserException, CellDeserializerException {
 
-        if (row == null) {
+        if (null == row) {
+            // Exception
+        }
+
+        if (null == tClass) {
+            // Exception
+        }
+
+        if (null == fieldMap) {
             // Exception
         }
 
         CellParser cellParser = new CellParser();
         T instance = tClass.newInstance();
 
-        for (Map.Entry<Integer, RowCellFields> positionSet : fieldMap.entrySet()) {
-            Cell cell = row.getCell(positionSet.getKey());
-            RowCellFields rowCellFields = positionSet.getValue();
+        for (Map.Entry<RowCellFields, Integer> positionSet : fieldMap.entrySet()) {
+            Cell cell = row.getCell(positionSet.getValue());
+            RowCellFields rowCellFields = positionSet.getKey();
             Field field = rowCellFields.getField();
             if (rowCellFields.getCellDeserializer() != null) {
                 field.set(instance, cellParser.parse(cell, rowCellFields.getCellDeserializer()));

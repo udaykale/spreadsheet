@@ -21,15 +21,7 @@ class RowCellFields {
         return field;
     }
 
-    void setField(Field field) {
-        this.field = field;
-    }
-
     CellDeserializer<?> getCellDeserializer() {
         return cellDeserializer;
-    }
-
-    void setCellDeserializer(CellDeserializer<?> cellDeserializer) {
-        this.cellDeserializer = cellDeserializer;
     }
 }

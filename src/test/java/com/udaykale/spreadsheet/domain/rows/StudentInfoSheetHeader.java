@@ -1,6 +1,7 @@
 package com.udaykale.spreadsheet.domain.rows;
 
 import com.udaykale.spreadsheet.annotation.Cell;
+import com.udaykale.spreadsheet.domain.deserializer.AverageCheckCellDeserializer;
 
 /**
  * @author uday
@@ -37,6 +38,10 @@ public class StudentInfoSheetHeader {
     private String active;
     @Cell(position = 15)
     private String average;
+    @Cell(position = 15, deserializer = AverageCheckCellDeserializer.class)
+    private Boolean anAverage;
+
+    private String temp;
 
     @Override
     public boolean equals(Object o) {
