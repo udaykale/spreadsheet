@@ -2,6 +2,7 @@ package com.udaykale.spreadsheet.domain;
 
 import com.udaykale.spreadsheet.annotation.Sheet;
 import com.udaykale.spreadsheet.annotation.Workbook;
+import com.udaykale.spreadsheet.domain.sheets.StudentInformationSheet;
 
 /**
  * @author uday
@@ -13,7 +14,7 @@ public class TestWorkbook {
     private TestSheet1 testSheet1;
 
     @Sheet(name = "das")
-    private TestSheet2 testSheet2;
+    private StudentInformationSheet testSheet2;
 
     private String name;
 }

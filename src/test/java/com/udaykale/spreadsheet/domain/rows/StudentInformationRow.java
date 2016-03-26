@@ -2,17 +2,19 @@ package com.udaykale.spreadsheet.domain.rows;
 
 import com.udaykale.spreadsheet.annotation.Cell;
 
+import java.util.Date;
+
 /**
  * @author uday
  */
-public class SchoolStudentInfoSheetHeader {
+public class StudentInformationRow {
 
     @Cell(position = 1)
-    private String regNumber;
+    private Integer regNumber;
     @Cell(position = 2)
-    private String rollNumber;
+    private Integer rollNumber;
     @Cell(position = 3)
-    private String grade;
+    private Integer grade;
     @Cell(position = 4)
     private String className;
     @Cell(position = 5)
@@ -28,18 +30,22 @@ public class SchoolStudentInfoSheetHeader {
     @Cell(position = 10)
     private String surname;
     @Cell(position = 11)
-    private String dob;
+    private Date dob;
     @Cell(position = 12)
     private String phoneNumber;
     @Cell(position = 13)
-    private String doj;
+    private Date doj;
+    @Cell(position = 14)
+    private Boolean isActive;
+    @Cell(position = 15)
+    private Double average;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SchoolStudentInfoSheetHeader that = (SchoolStudentInfoSheetHeader) o;
+        StudentInformationRow that = (StudentInformationRow) o;
 
         if (regNumber != null ? !regNumber.equals(that.regNumber) : that.regNumber != null) return false;
         if (rollNumber != null ? !rollNumber.equals(that.rollNumber) : that.rollNumber != null) return false;
@@ -54,7 +60,9 @@ public class SchoolStudentInfoSheetHeader {
         if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
         if (dob != null ? !dob.equals(that.dob) : that.dob != null) return false;
         if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) return false;
-        return doj != null ? doj.equals(that.doj) : that.doj == null;
+        if (doj != null ? !doj.equals(that.doj) : that.doj != null) return false;
+        if (isActive != null ? !isActive.equals(that.isActive) : that.isActive != null) return false;
+        return average != null ? average.equals(that.average) : that.average == null;
 
     }
 
@@ -73,30 +81,48 @@ public class SchoolStudentInfoSheetHeader {
         result = 31 * result + (dob != null ? dob.hashCode() : 0);
         result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
         result = 31 * result + (doj != null ? doj.hashCode() : 0);
+        result = 31 * result + (isActive != null ? isActive.hashCode() : 0);
+        result = 31 * result + (average != null ? average.hashCode() : 0);
         return result;
     }
 
-    public String getRegNumber() {
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public Double getAverage() {
+        return average;
+    }
+
+    public void setAverage(Double average) {
+        this.average = average;
+    }
+
+    public Integer getRegNumber() {
         return regNumber;
     }
 
-    public void setRegNumber(String regNumber) {
+    public void setRegNumber(Integer regNumber) {
         this.regNumber = regNumber;
     }
 
-    public String getRollNumber() {
+    public Integer getRollNumber() {
         return rollNumber;
     }
 
-    public void setRollNumber(String rollNumber) {
+    public void setRollNumber(Integer rollNumber) {
         this.rollNumber = rollNumber;
     }
 
-    public String getGrade() {
+    public Integer getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
     }
 
@@ -156,11 +182,11 @@ public class SchoolStudentInfoSheetHeader {
         this.surname = surname;
     }
 
-    public String getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 
@@ -172,11 +198,11 @@ public class SchoolStudentInfoSheetHeader {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getDoj() {
+    public Date getDoj() {
         return doj;
     }
 
-    public void setDoj(String doj) {
+    public void setDoj(Date doj) {
         this.doj = doj;
     }
 }

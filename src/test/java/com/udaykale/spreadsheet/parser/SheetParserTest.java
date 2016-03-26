@@ -11,6 +11,6 @@ public class SheetParserTest {
     @Test
     public void spreadsheetParserTest() {
 
-        WorkbookParser<TestWorkbook> testWorkbookSpreadsheetParser = new WorkbookParser<>();
+        SheetParser<TestWorkbook> testSheetParser = new SheetParser<>();
     }
 }

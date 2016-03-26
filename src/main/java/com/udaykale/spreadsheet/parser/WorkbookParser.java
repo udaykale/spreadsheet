@@ -12,9 +12,13 @@ import java.lang.reflect.InvocationTargetException;
 public class WorkbookParser<T> {
 
     public T parse(Workbook workbook, Class<T> tClass)
-            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, SpreadsheetParserException {
 
         if (!tClass.isAnnotationPresent(com.udaykale.spreadsheet.annotation.Workbook.class)) {
+            // Exception
+        }
+
+        if (workbook == null) {
             // Exception
         }
 

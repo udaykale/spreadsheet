@@ -16,11 +16,15 @@ import java.util.Map;
 public class SheetParser<T> {
 
     protected T parse(Sheet sheet, Class<T> tClass)
-            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, SpreadsheetParserException {
+
+        if (sheet == null) {
+            // Exception
+        }
 
         Field[] fields = tClass.getDeclaredFields();
-        T sheetInstance = tClass.newInstance();
         RowParser rowParser = new RowParser();
+        T sheetInstance = tClass.newInstance();
 
         for (Field field : fields) {
             field.setAccessible(true);
@@ -28,8 +32,8 @@ public class SheetParser<T> {
                 com.udaykale.spreadsheet.annotation.Row rowAnnotation = field.getAnnotation(com.udaykale.spreadsheet.annotation.Row.class);
                 int position = rowAnnotation.position();
                 Row row = sheet.getRow(position);
-                Map<Integer, Field> fieldMap = RowParser.cellPositionAndTypeMap(field.getType());
-                field.set(sheetInstance, rowParser.parse(row, field.getType(), fieldMap));
+                RowParserWithFieldMap rowParserWithFieldMap = new RowParserWithFieldMap();
+                field.set(sheetInstance, rowParserWithFieldMap.parse(row, field.getType(), rowParserWithFieldMap.cellPositionAndTypeMap(field.getType())));
             } else if (field.isAnnotationPresent(com.udaykale.spreadsheet.annotation.Rows.class)) {
                 field.setAccessible(true);
                 if (List.class.isAssignableFrom(field.getType())) {
@@ -41,10 +45,11 @@ public class SheetParser<T> {
                 List list = new ArrayList<>();
                 ParameterizedType fieldParameterizedType = (ParameterizedType) field.getGenericType();
                 Class<?> fieldActualClass = (Class<?>) fieldParameterizedType.getActualTypeArguments()[0];
-                Map<Integer, Field> fieldMap = RowParser.cellPositionAndTypeMap(fieldActualClass);
+                RowParserWithFieldMap rowParserWithFieldMap = new RowParserWithFieldMap();
+                Map<Integer, RowCellFields> fieldMap = rowParserWithFieldMap.cellPositionAndTypeMap(fieldActualClass);
                 for (int position = start; position <= end; position++) {
                     Row row = sheet.getRow(position);
-                    list.add(rowParser.parse(row, fieldActualClass, fieldMap));
+                    list.add(rowParserWithFieldMap.parse(row, fieldActualClass, fieldMap));
                 }
                 field.set(sheetInstance, list);
             }
