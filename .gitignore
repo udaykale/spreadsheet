@@ -20,3 +20,6 @@ hs_err_pid*
 
 # Excel temp file
 ~*.xlsx
+
+#.DS_Store
+**/.DS_Store

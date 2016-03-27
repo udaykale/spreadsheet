@@ -1,9 +1,7 @@
-package com.udaykale.spreadsheet.parser.cell;
+package com.udaykale.spreadsheet.parser;
 
 import com.udaykale.spreadsheet.custom.NegativeTest;
 import com.udaykale.spreadsheet.custom.PositiveTest;
-import com.udaykale.spreadsheet.parser.CellParser;
-import com.udaykale.spreadsheet.parser.CellParserException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;

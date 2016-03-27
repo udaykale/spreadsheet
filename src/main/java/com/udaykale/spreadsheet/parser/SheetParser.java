@@ -17,7 +17,7 @@ import java.util.Map;
 public class SheetParser<T> {
 
     protected T parse(Sheet sheet, Class<T> tClass)
-            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, CellParserException, CellDeserializerException {
+            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, CellParserException, CellDeserializerException, RowParserException {
 
         if (sheet == null) {
             // Exception

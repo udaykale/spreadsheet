@@ -1,4 +1,4 @@
-package com.udaykale.spreadsheet.parser.cell;
+package com.udaykale.spreadsheet.parser;
 
 import com.udaykale.spreadsheet.custom.NegativeTest;
 import com.udaykale.spreadsheet.custom.PositiveTest;

@@ -17,12 +17,7 @@ import java.util.Map;
 class RowParserWithFieldMap<T> {
 
     Map<RowCellFields, Integer> cellPositionAndTypeMap(Class<T> tClass)
-            throws IllegalAccessException, InstantiationException {
-
-
-        if (null == tClass) {
-            // Exception
-        }
+            throws IllegalAccessException, InstantiationException, RowParserException {
 
         Map<RowCellFields, Integer> fieldMap = new HashMap<>();
         Field[] fields = tClass.getDeclaredFields();
@@ -41,26 +36,14 @@ class RowParserWithFieldMap<T> {
                     Boolean.class == type || Date.class == type) {
                 fieldMap.put(new RowCellFields(field, null), cell.position() - 1);
             } else {
-                // Exception
+                throw new RowParserException(String.format("Field of type %s cannot be parsed", type.toString()));
             }
         }
         return fieldMap;
     }
 
     T parse(Row row, Class<T> tClass, Map<RowCellFields, Integer> fieldMap)
-            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, CellParserException, CellDeserializerException {
-
-        if (null == row) {
-            // Exception
-        }
-
-        if (null == tClass) {
-            // Exception
-        }
-
-        if (null == fieldMap) {
-            // Exception
-        }
+            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, CellParserException, CellDeserializerException, RowParserException {
 
         CellParser cellParser = new CellParser();
         T instance = tClass.newInstance();
