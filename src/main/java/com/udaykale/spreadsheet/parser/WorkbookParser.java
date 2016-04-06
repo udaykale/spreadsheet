@@ -13,14 +13,14 @@ import java.lang.reflect.InvocationTargetException;
 public class WorkbookParser<T> {
 
     public T parse(Workbook workbook, Class<T> tClass)
-            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, CellParserException, CellDeserializerException, RowParserException {
+            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, CellParserException, CellDeserializerException, RowParserException, SheetParserException, WorkbookParserException {
 
         if (!tClass.isAnnotationPresent(com.udaykale.spreadsheet.annotation.Workbook.class)) {
-            // Exception
+            throw new WorkbookParserException("");
         }
 
-        if (workbook == null) {
-            // Exception
+        if (null == workbook) {
+            throw new WorkbookParserException("");
         }
 
         Field[] fields = tClass.getDeclaredFields();

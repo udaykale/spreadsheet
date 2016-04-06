@@ -15,8 +15,8 @@ public class StudentInformationSheet {
     @Row
     private StudentInfoSheetHeader studentInfoSheetHeader;
 
-    @Rows
-    private List<StudentInformationRow> testRows1;
+    @Rows(start = 2)
+    private List<StudentInformationRow> StudentInformationRows;
 
     private String name;
 

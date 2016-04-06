@@ -15,11 +15,11 @@ public class AverageCheckCellDeserializer extends CellDeserializer<Boolean> {
     public Boolean deserialize(Cell cell)
             throws CellDeserializerException {
 
-        if (cell.getCellType() != Cell.CELL_TYPE_STRING) {
-            throw new CellDeserializerException("Cell is not of String type");
+        if (cell.getCellType() != Cell.CELL_TYPE_NUMERIC) {
+            throw new CellDeserializerException("Cell is not of Numeric type");
         }
 
-        if (AVERAGE_STRING.equals(cell.getStringCellValue())) {
+        if (23.41 == cell.getNumericCellValue()) {
             return true;
         } else {
             return false;
