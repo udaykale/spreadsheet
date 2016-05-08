@@ -1,26 +1,31 @@
 package com.udaykale.spreadsheet.parser;
 
+import com.udaykale.spreadsheet.SpringTest;
 import com.udaykale.spreadsheet.custom.NegativeTest;
 import com.udaykale.spreadsheet.custom.PositiveTest;
 import com.udaykale.spreadsheet.domain.rows.InvalidRow;
 import com.udaykale.spreadsheet.domain.rows.StudentInfoSheetHeader;
 import com.udaykale.spreadsheet.extension.CellDeserializerException;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author uday
  */
-public class RowParserTest {
+public class RowParserTest extends SpringTest {
+
+    @Resource(name = "headerRow")
+    private Row headerRow;
+
+    @Resource(name = "secondRow")
+    private Row secondRow;
 
     @Test
     @PositiveTest
@@ -44,15 +49,8 @@ public class RowParserTest {
         expected.setActive("Active");
         expected.setAverage("Average");
 
-        ClassLoader classLoader = getClass().getClassLoader();
-        String filePath = classLoader.getResource("School_Student_Information.xlsx").getPath();
-        Workbook workbook = new XSSFWorkbook(filePath);
-        Sheet sheet = workbook.getSheet("info");
-        Row row = sheet.getRow(0);
-
         RowParser<StudentInfoSheetHeader> rowParser = new RowParser<>();
-        StudentInfoSheetHeader actual = rowParser.parse(row, StudentInfoSheetHeader.class);
-        workbook.close();
+        StudentInfoSheetHeader actual = rowParser.parse(headerRow, StudentInfoSheetHeader.class);
         Assert.assertTrue(expected.equals(actual));
     }
 
@@ -77,14 +75,8 @@ public class RowParserTest {
 
         expectedException.expect(RowParserException.class);
         expectedException.expectMessage("Row Type 'tClass' cannot be null");
-        ClassLoader classLoader = getClass().getClassLoader();
-        String filePath = classLoader.getResource("School_Student_Information.xlsx").getPath();
-        Workbook workbook = new XSSFWorkbook(filePath);
-        Sheet sheet = workbook.getSheet("info");
-        Row row = sheet.getRow(0);
         RowParser<StudentInfoSheetHeader> rowParser = new RowParser<>();
-        workbook.close();
-        rowParser.parse(row, null);
+        rowParser.parse(secondRow, null);
     }
 
     @Test
@@ -94,13 +86,7 @@ public class RowParserTest {
 
         expectedException.expect(RowParserException.class);
         expectedException.expectMessage("Field of type class java.lang.Exception cannot be parsed");
-        ClassLoader classLoader = getClass().getClassLoader();
-        String filePath = classLoader.getResource("School_Student_Information.xlsx").getPath();
-        Workbook workbook = new XSSFWorkbook(filePath);
-        Sheet sheet = workbook.getSheet("info");
-        Row row = sheet.getRow(0);
         RowParser<InvalidRow> rowParser = new RowParser<>();
-        workbook.close();
-        rowParser.parse(row, InvalidRow.class);
+        rowParser.parse(secondRow, InvalidRow.class);
     }
 }

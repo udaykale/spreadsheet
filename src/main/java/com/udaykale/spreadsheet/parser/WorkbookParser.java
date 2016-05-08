@@ -15,12 +15,16 @@ public class WorkbookParser<T> {
     public T parse(Workbook workbook, Class<T> tClass)
             throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, CellParserException, CellDeserializerException, RowParserException, SheetParserException, WorkbookParserException {
 
+        if (tClass == null) {
+            throw new WorkbookParserException("tClass cannot be null");
+        }
+
         if (!tClass.isAnnotationPresent(com.udaykale.spreadsheet.annotation.Workbook.class)) {
-            throw new WorkbookParserException("");
+            throw new WorkbookParserException("tClass does not have @Workbook annotation");
         }
 
         if (null == workbook) {
-            throw new WorkbookParserException("");
+            throw new WorkbookParserException("Workbook cannot be null");
         }
 
         Field[] fields = tClass.getDeclaredFields();

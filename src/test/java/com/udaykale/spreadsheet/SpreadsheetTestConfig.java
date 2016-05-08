@@ -36,15 +36,15 @@ public class SpreadsheetTestConfig {
         return workbook.getSheet("info");
     }
 
-    @Bean
+    @Bean(name = "headerRow")
     public Row getHeaderRow() throws IOException {
+        Sheet sheet = getSheet();
+        return sheet.getRow(0);
+    }
+
+    @Bean(name = "secondRow")
+    public Row getSecondRow() throws IOException {
         Sheet sheet = getSheet();
         return sheet.getRow(1);
     }
-
-//    @Bean
-//    public Row getSecondRow() throws IOException {
-//        Sheet sheet = getSheet();
-//        return sheet.getRow(1);
-//    }
 }

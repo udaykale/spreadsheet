@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         CellParseTestSuite.class,
         RowParserTest.class,
-        SheetParserTest.class
+        SheetParserTest.class,
+        WorkbookParseTest.class
 })
 public class ParserTestSuite {
 }

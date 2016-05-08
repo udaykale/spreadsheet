@@ -11,7 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javax.inject.Inject;
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
@@ -23,7 +23,7 @@ import java.util.Date;
  */
 public class CellParserTest extends SpringTest {
 
-    @Inject
+    @Resource(name = "secondRow")
     private Row row;
 
     @Test

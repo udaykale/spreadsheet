@@ -1,11 +1,11 @@
 group 'com.udaykale'
-version '0.1'
+version '0.2-rc'
 
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
 
-def springVersion = '4.1.4.RELEASE'
+def springVersion = '4.2.5.RELEASE'
 
 repositories {
     mavenCentral()
@@ -13,18 +13,15 @@ repositories {
 
 dependencies {
     compile(
-            'org.apache.poi:poi:3.14',
             'org.apache.poi:poi-ooxml:3.14',
-            'org.slf4j:slf4j-api:1.7.18',
+            'ch.qos.logback:logback-classic:1.1.7',
             'javax.inject:javax.inject:1',
-            "org.springframework:spring-webmvc:${springVersion}",
             "org.springframework:spring-context-support:${springVersion}"
     )
 
     runtime(
-            'org.apache.poi:poi:3.14',
             'org.apache.poi:poi-ooxml:3.14',
-            'log4j:log4j:1.2.17'
+            'ch.qos.logback:logback-classic:1.1.7'
     )
 
     testCompile(

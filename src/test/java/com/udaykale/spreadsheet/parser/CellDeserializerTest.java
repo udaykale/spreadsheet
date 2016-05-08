@@ -12,7 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javax.inject.Inject;
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
@@ -21,7 +21,10 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class CellDeserializerTest extends SpringTest {
 
-    @Inject
+    @Resource(name = "headerRow")
+    private Row header;
+
+    @Resource(name = "secondRow")
     private Row row;
 
     @Test
@@ -29,12 +32,11 @@ public class CellDeserializerTest extends SpringTest {
     public void deserializeToCheckAverageString()
             throws IOException, InvocationTargetException, NoSuchMethodException, InstantiationException, CellParserException, IllegalAccessException, CellDeserializerException {
 
-        Boolean expected = true;
-        Cell cell = row.getCell(14);
+        Cell cell = header.getCell(14);
         CellParser<Boolean> cellParser = new CellParser<>();
         AverageCheckCellDeserializer averageCheckCellDeserializer = new AverageCheckCellDeserializer();
         Boolean actual = cellParser.parse(cell, averageCheckCellDeserializer);
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals(true, actual);
     }
 
     @Rule
