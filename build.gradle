@@ -1,5 +1,5 @@
 group 'com.udaykale'
-version '0.2-rc'
+version '0.2-final'
 
 apply plugin: 'java'
 
