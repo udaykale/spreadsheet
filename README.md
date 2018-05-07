@@ -33,6 +33,7 @@ public class StudentInformationSheet {
 }
 ```
 `@Row(start = <Integer>)` specifies the row to start the parsing from.
+
 `@Row()` starts from the first position.
 
 **POJO with annotations to Parse a Row**
@@ -82,7 +83,6 @@ public class StudentInformationRow {
     WorkbookParser<TestWorkbook> workbookParser = new WorkbookParser<>();
     workbookParser.parse(workbook, TestWorkbook.class);
 ```
-`Sheet is a`
 
 **Parse a sheet**
 ```java
